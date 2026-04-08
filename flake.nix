@@ -27,7 +27,7 @@
       ];
 
       shellHook = ''
-        echo "🐍 Python environment activated."
+        echo "Python environment activated."
         echo "Python: $(python --version)"
         echo "uv:     $(uv --version)"
       '';
