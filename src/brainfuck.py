@@ -30,7 +30,7 @@ class BrainFuckVm:
             print("error")
             exit(1)
 
-    def step(self) -> bool:
+    def _step(self) -> bool:
         if self.pc >= len(self.code_str):
             return False
 
@@ -38,56 +38,56 @@ class BrainFuckVm:
 
         match cmd:
             case ">":
-                self.ptr_right()
+                self._ptr_right()
             case "<":
-                self.ptr_left()
+                self._ptr_left()
             case "+":
-                self.inc()
+                self._inc()
             case "-":
-                self.dec()
+                self._dec()
             case ".":
-                self.output()
+                self._output()
             case ",":
-                self.input_()
+                self._input_()
             case "[":
-                self.jump_fwd()
+                self._jump_fwd()
             case "]":
-                self.jump_back()
+                self._jump_back()
 
         self.pc += 1
         return True
 
     # >
-    def ptr_right(self) -> None:
+    def _ptr_right(self) -> None:
         self.ptr = (self.ptr + 1) % self.memory_size
 
     # <
-    def ptr_left(self) -> None:
+    def _ptr_left(self) -> None:
         self.ptr = (self.ptr - 1) % self.memory_size
 
     # +
-    def inc(self) -> None:
+    def _inc(self) -> None:
         self.memory[self.ptr] = (self.memory[self.ptr] + 1) % 256
 
     # -
-    def dec(self) -> None:
+    def _dec(self) -> None:
         self.memory[self.ptr] = (self.memory[self.ptr] - 1) % 256
 
     # .
-    def output(self) -> None:
+    def _output(self) -> None:
         print(chr(self.memory[self.ptr]), end="")
 
     # ,
-    def input_(self) -> None:
+    def _input_(self) -> None:
         self.memory[self.ptr] = next(self.buffer)
 
     # [
-    def jump_fwd(self) -> None:
+    def _jump_fwd(self) -> None:
         if self.memory[self.ptr] == 0:
             self.pc = self.bracket_map[self.pc]
 
     # ]
-    def jump_back(self) -> None:
+    def _jump_back(self) -> None:
         if self.memory[self.ptr] != 0:
             self.pc = self.bracket_map[self.pc]
 
@@ -104,7 +104,7 @@ class BrainFuckVm:
             print(f"{offset}: {bytes_str}")
 
     def run(self) -> None:
-        while self.step():
+        while self._step():
             pass
 
 
